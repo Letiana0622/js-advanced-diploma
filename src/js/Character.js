@@ -19,6 +19,7 @@ export default class Character {
     this.defence = 0;
     this.health = 50;
     this.type = type;
+    if (!new.target) throw "Error, new Character(level) is forbidden for new object creation";
     // TODO: выбросите исключение, если кто-то использует "new Character()"
   }
 }

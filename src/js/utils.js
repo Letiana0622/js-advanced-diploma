@@ -4,15 +4,15 @@
  * @param boardSize - размер квадратного поля (в длину или ширину)
  * @returns строка - тип ячейки на поле:
  *
- * top-left
- * top-right
+ * top-left+
+ * top-right+
  * top
- * bottom-left
- * bottom-right
+ * bottom-left+
+ * bottom-right+
  * bottom
  * right
  * left
- * center
+ * center+
  *
  * @example
  * ```js
@@ -24,7 +24,58 @@
  * */
 export function calcTileType(index, boardSize) {
   // TODO: ваш код будет тут
-  return 'center';
+  let square = boardSize * boardSize;
+  let topLeft = 0;
+  let topRight = boardSize-1;
+  let bottomLeft = square - boardSize;
+  let bottomRight = square -1;
+
+  let leftList = []
+  for (let i=0; i < boardSize-2; i++) {
+    leftList.push((boardSize) + (i*boardSize))
+  }
+  let indexIsInLeftList = leftList.includes(index);
+
+  let rightList = []
+  for (let i=0; i < boardSize-2; i++) {
+    rightList.push((boardSize*2-1) + (i*boardSize))
+  }
+  let indexIsInRighttList = rightList.includes(index);
+
+  
+  if (index === topLeft) {return 'top-left'}
+  else if (index === topRight) {return 'top-right'}
+  else if (index === bottomLeft) {return 'bottom-left'}
+  else if (index === bottomRight) {return 'bottom-right'}
+  else if (index > topLeft && index < topRight) {return 'top'}
+  else if (index > bottomLeft && index < bottomRight) {return 'bottom'}
+  else if (indexIsInLeftList ) {return 'left'}
+  else if (indexIsInRighttList) {return 'right'}
+  else {return 'center'}
+
+
+/*
+  switch (index) {
+    case topLeft: return 'top-left';
+    break;
+    case topRight: return 'top-right';
+    break;
+    case bottomLeft: return 'bottom-left';
+    break;
+    case bottomRight: return 'bottom-right';
+    break;
+    case index > topLeft && index < topRight: return 'top';
+    break;
+    case index > bottomLeft && index < bottomRight: return 'bottom';
+    break;
+    case indexIsInLeftList === true: return 'left';
+    break;
+    case indexIsInRighttList === true: return 'right';
+    break;
+    default: return 'center';
+    break;
+  }*/
+
 }
 
 export function calcHealthLevel(health) {

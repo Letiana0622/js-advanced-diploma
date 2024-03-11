@@ -1,6 +1,6 @@
 import Character from './Character';
 
-export default class PositionedCharacter {
+export default class Position {
   constructor(character, position) {
     if (!(character instanceof Character)) {
       throw new Error('character must be instance of Character or its children');
@@ -14,3 +14,5 @@ export default class PositionedCharacter {
     this.position = position;
   }
 }
+
+

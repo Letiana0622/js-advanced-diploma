@@ -7,7 +7,7 @@ export default class GamePlay {
     this.boardEl = null;
     this.cells = [];
     this.cellClickListeners = [];
-    this.cellEnterListeners = [];
+    this.cellEnterListeners = []; 
     this.cellLeaveListeners = [];
     this.newGameListeners = [];
     this.saveGameListeners = [];
