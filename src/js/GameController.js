@@ -1,50 +1,63 @@
-import {generateTeam} from './generators'
-import Position from './PositionedCharacter'
+import { generateTeam } from "./generators";
+import Position from "./PositionedCharacter";
 /*import GamePlay from './src/js/GamePlay'*/
 
-function positionedTeam () {
-  const playerTypes = ['Bowman', 'Swordsman', 'Magician'];
-  const computerTypes = ['Vampire', 'Undead', 'Daemon']; 
-  const playerCells = [0,1,8,9,16,17,24,25,32,33,40,41,48,49,56,57];
-  const computerCells = [6,7,14,15,22,23,30,31,38,39,46,47,54,55,62,63];
+function positionedTeam() {
+  const playerTypes = ["Bowman", "Swordsman", "Magician"];
+  const computerTypes = ["Vampire", "Undead", "Daemon"];
+  const playerCells = [
+    0, 1, 8, 9, 16, 17, 24, 25, 32, 33, 40, 41, 48, 49, 56, 57,
+  ];
+  const computerCells = [
+    6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55, 62, 63,
+  ];
   let teamPlayer = generateTeam(playerTypes, 3, 4);
   /*console.log(teamPlayer.characters)*/
   /*console.log(typeof(teamPlayer))*/
-  
+
   let teamComputer = generateTeam(computerTypes, 3, 4);
   /*console.log(teamComputer)*/
-  
-  let positions =[];
-  
-  for (player of teamPlayer.characters) {
-    let randomPlayerPosition = playerCells[(Math.floor(Math.random() * playerCells.length))];
+
+  let positions = [];
+
+  for (let player of teamPlayer.characters) {
+    let randomPlayerPosition =
+      playerCells[Math.floor(Math.random() * playerCells.length)];
     let position = new Position(player, randomPlayerPosition);
-    positions.push(position)
-   /*console.log(positions)*/
+    positions.push(position);
+    /*console.log(positions)*/
   }
-  
-  for (player_ of teamComputer.characters) {
-    let randomComputerPosition = computerCells[(Math.floor(Math.random() * computerCells.length))];
+
+  for (let player_ of teamComputer.characters) {
+    let randomComputerPosition =
+      computerCells[Math.floor(Math.random() * computerCells.length)];
     let position_ = new Position(player_, randomComputerPosition);
-    positions.push(position_)
+    positions.push(position_);
   }
-  return positions
+  return positions;
 }
 
 export default class GameController {
   constructor(gamePlay, stateService) {
     this.gamePlay = gamePlay;
     this.stateService = stateService;
+    this.positions = positionedTeam();
   }
 
   init() {
-    
-    window.addEventListener('load', () => {
-      this.gamePlay.drawUi('prairie');
+    /* window.addEventListener("load", () => {
+      this.gamePlay.drawUi("prairie");
       let positions = positionedTeam();
-      this.gamePlay.redrawPositions(positions)
-    });
-  
+      this.gamePlay.redrawPositions(positions);
+    });*/
+    this.gamePlay.drawUi("prairie");
+    /*let positions = positionedTeam();*/
+    /*this.gamePlay.redrawPositions(positions);*/
+    this.gamePlay.redrawPositions(this.positions);
+    this.gamePlay.addCellEnterListener(this.onCellEnter.bind(this));
+    this.gamePlay.addCellLeaveListener(this.onCellLeave.bind(this));
+    this.gamePlay.addCellClickListener(this.onCellClick.bind(this));
+
     // TODO: add event listeners to gamePlay events
     // TODO: load saved stated from stateService
   }
@@ -54,14 +67,27 @@ export default class GameController {
   }
 
   onCellEnter(index) {
+    const activChar = this.positions.find(
+      (element) => element.position === index,
+    );
+    if (activChar) {
+      const message = `🎖${activChar.character.level} ⚔${activChar.character.attack} 🛡${activChar.character.defence} ❤${activChar.character.health}`;
+      this.gamePlay.showCellTooltip(message, index);
+    }
+
+    /*const cell = this.cells[index];
+    if (cell.firstElementChild) {
+      this.gamePlay.showCellTooltip('toolTip',index)
+    }*/
+
     // TODO: react to mouse enter
   }
 
   onCellLeave(index) {
+    this.gamePlay.hideCellTooltip(index);
     // TODO: react to mouse leave
   }
 }
-
 
 /*
 generateTeam - формирует команду на основе characterGenerator. Для формирования всех персонажей на поле потребуется вызвать generateTeam дважды

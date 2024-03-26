@@ -13,13 +13,14 @@
  * vampire
  */
 export default class Character {
-  constructor(level, type = 'generic') {
+  constructor(level, type = "generic") {
     this.level = level;
     this.attack = 0;
     this.defence = 0;
     this.health = 50;
     this.type = type;
-    if (!new.target) throw "Error, new Character(level) is forbidden for new object creation";
+    if (!new.target)
+      throw "Error, new Character(level) is forbidden for new object creation";
     // TODO: выбросите исключение, если кто-то использует "new Character()"
   }
 }

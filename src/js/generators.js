@@ -9,42 +9,38 @@
  *
  */
 /*import Character from './Character'*/
-import Bowman from './characters/Bowman'
-import Daemon from './characters/Daemon'
-import Magician from './characters/Magician'
-import Swordsman from './characters/Swordsman'
-import Undead from './characters/Undead'
-import Vampire from './characters/Vampire'
-import Team from './Team.js'
+import Bowman from "./characters/Bowman";
+import Daemon from "./characters/Daemon";
+import Magician from "./characters/Magician";
+import Swordsman from "./characters/Swordsman";
+import Undead from "./characters/Undead";
+import Vampire from "./characters/Vampire";
+import Team from "./Team.js";
 
 export function* characterGenerator(allowedTypes, maxLevel) {
-  let i=0
+  let i = 0;
   while (i < 5) {
-    let randomIndex = Math.floor(Math.random() * allowedTypes.length)
-    let randomType = allowedTypes[randomIndex]
-    let randomLevel = Math.floor(Math.random() * (maxLevel))+1
-    let newCharacter
-    if (randomType === 'Vampire') {
-      newCharacter =  new Vampire(randomLevel, randomType)
+    let randomIndex = Math.floor(Math.random() * allowedTypes.length);
+    let randomType = allowedTypes[randomIndex];
+    let randomLevel = Math.floor(Math.random() * maxLevel) + 1;
+    let newCharacter;
+    if (randomType === "Vampire") {
+      newCharacter = new Vampire(randomLevel, randomType);
+    } else if (randomType === "Undead") {
+      newCharacter = new Undead(randomLevel, randomType);
+    } else if (randomType === "Daemon") {
+      newCharacter = new Daemon(randomLevel, randomType);
+    } else if (randomType === "Bowman") {
+      newCharacter = new Bowman(randomLevel, randomType);
+    } else if (randomType === "Magician") {
+      newCharacter = new Magician(randomLevel, randomType);
+    } else if (randomType === "Swordsman") {
+      newCharacter = new Swordsman(randomLevel, randomType);
     }
-    else if (randomType === 'Undead') {
-      newCharacter =  new Undead(randomLevel, randomType)
-    }
-    else if (randomType === 'Daemon') {
-      newCharacter =  new Daemon(randomLevel, randomType)
-    }
-    else if (randomType === 'Bowman') {
-      newCharacter =  new Bowman(randomLevel, randomType)
-    }
-    else if (randomType === 'Magician') {
-      newCharacter =  new Magician(randomLevel, randomType)
-    }
-    else if (randomType === 'Swordsman') {
-      newCharacter =  new Swordsman(randomLevel, randomType)
-    }
-  
-    yield newCharacter
-  i += 1}
+
+    yield newCharacter;
+    i += 1;
+  }
 }
 
 /**
@@ -56,13 +52,13 @@ export function* characterGenerator(allowedTypes, maxLevel) {
  * */
 export function generateTeam(allowedTypes, maxLevel, characterCount) {
   // TODO: write logic here
-  const newTeam = new Team()
-  for (let i=0; i < characterCount;i++) {
+  const newTeam = new Team();
+  for (let i = 0; i < characterCount; i++) {
     let playerGenerator = characterGenerator(allowedTypes, maxLevel);
     let newCharacter = playerGenerator.next().value;
     newTeam.add(newCharacter);
   }
-  return newTeam
+  return newTeam;
 }
 
 /*

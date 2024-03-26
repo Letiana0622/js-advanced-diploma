@@ -26,35 +26,43 @@ export function calcTileType(index, boardSize) {
   // TODO: ваш код будет тут
   let square = boardSize * boardSize;
   let topLeft = 0;
-  let topRight = boardSize-1;
+  let topRight = boardSize - 1;
   let bottomLeft = square - boardSize;
-  let bottomRight = square -1;
+  let bottomRight = square - 1;
 
-  let leftList = []
-  for (let i=0; i < boardSize-2; i++) {
-    leftList.push((boardSize) + (i*boardSize))
+  let leftList = [];
+  for (let i = 0; i < boardSize - 2; i++) {
+    leftList.push(boardSize + i * boardSize);
   }
   let indexIsInLeftList = leftList.includes(index);
 
-  let rightList = []
-  for (let i=0; i < boardSize-2; i++) {
-    rightList.push((boardSize*2-1) + (i*boardSize))
+  let rightList = [];
+  for (let i = 0; i < boardSize - 2; i++) {
+    rightList.push(boardSize * 2 - 1 + i * boardSize);
   }
   let indexIsInRighttList = rightList.includes(index);
 
-  
-  if (index === topLeft) {return 'top-left'}
-  else if (index === topRight) {return 'top-right'}
-  else if (index === bottomLeft) {return 'bottom-left'}
-  else if (index === bottomRight) {return 'bottom-right'}
-  else if (index > topLeft && index < topRight) {return 'top'}
-  else if (index > bottomLeft && index < bottomRight) {return 'bottom'}
-  else if (indexIsInLeftList ) {return 'left'}
-  else if (indexIsInRighttList) {return 'right'}
-  else {return 'center'}
+  if (index === topLeft) {
+    return "top-left";
+  } else if (index === topRight) {
+    return "top-right";
+  } else if (index === bottomLeft) {
+    return "bottom-left";
+  } else if (index === bottomRight) {
+    return "bottom-right";
+  } else if (index > topLeft && index < topRight) {
+    return "top";
+  } else if (index > bottomLeft && index < bottomRight) {
+    return "bottom";
+  } else if (indexIsInLeftList) {
+    return "left";
+  } else if (indexIsInRighttList) {
+    return "right";
+  } else {
+    return "center";
+  }
 
-
-/*
+  /*
   switch (index) {
     case topLeft: return 'top-left';
     break;
@@ -75,17 +83,16 @@ export function calcTileType(index, boardSize) {
     default: return 'center';
     break;
   }*/
-
 }
 
 export function calcHealthLevel(health) {
   if (health < 15) {
-    return 'critical';
+    return "critical";
   }
 
   if (health < 50) {
-    return 'normal';
+    return "normal";
   }
 
-  return 'high';
+  return "high";
 }

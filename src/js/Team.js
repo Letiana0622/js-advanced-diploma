@@ -26,35 +26,35 @@ export default class Team {
 }
 */
 
-class Team {
+export default class Team {
   constructor() {
-      this.characters = [];
+    this.characters = [];
   }
-  
-    [Symbol.iterator] = function () {
-      const properties = Object.keys(this)
-      let count = 0
-  
-      return {
-        next() {
-          if (count < properties.length) {
-            const key = properties[count]
-            let result = { done: false, value: this[key] }
-            count++
-            return result
-          } else {
-            return { done: true }
-          }
-        },
-      }
-    }
-  
+
+  [Symbol.iterator] = function () {
+    const properties = Object.keys(this);
+    let count = 0;
+
+    return {
+      next() {
+        if (count < properties.length) {
+          const key = properties[count];
+          let result = { done: false, value: this[key] };
+          count++;
+          return result;
+        } else {
+          return { done: true };
+        }
+      },
+    };
+  };
+
   add(...persons) {
-   for (const person of persons) {
-    this.characters.push(person);
-   }
+    for (const person of persons) {
+      this.characters.push(person);
+    }
   }
-  }
+}
 
 /*
 class Team {
@@ -81,4 +81,3 @@ const team = new Team(characters);
 
 team.characters // [swordsman, bowman]
 */
-
